@@ -19,9 +19,9 @@
     setTheme(!isDark);
   });
 
-  // restore
+  // restore: default to light theme unless user explicitly saved dark ('1')
   const saved = localStorage.getItem('pref-theme-dark');
-  if(saved===null || saved==='1') setTheme(true); else setTheme(false);
+  if(saved === '1') setTheme(true); else setTheme(false);
 
   // Tooltip for icons
   function makeTooltip(){
@@ -29,7 +29,7 @@
     if(!t){
       t = document.createElement('div');
       t.id = '__icon_tooltip__';
-      Object.assign(t.style,{position:'fixed',padding:'6px 10px',background:'rgba(0,0,0,0.8)',color:'#fff',borderRadius:'6px',fontSize:'0.9rem',zIndex:10000,transition:'opacity 0.18s',opacity:0});
+        Object.assign(t.style,{position:'fixed',padding:'6px 10px',background:'rgba(0,0,0,0.85)',color:'#fff',borderRadius:'6px',fontSize:'0.9rem',zIndex:10000,transition:'opacity 0.18s',opacity:0});
       document.body.appendChild(t);
     }
     return t;
@@ -89,7 +89,105 @@
     if(!s) return;
     setTimeout(()=>{
       s.classList.add('hidden');
+      // reveal view controls after splash fades
+      const controls = document.getElementById('view-controls');
+      if(controls) controls.classList.add('controls-visible');
       setTimeout(()=>{ if(s && s.parentNode) s.parentNode.removeChild(s); }, 600);
     }, 2000);
   });
+
+  // View controls: toggle between layout (flags-stack) and route view
+  const btnLayout = document.getElementById('btnLayout');
+  const btnRoute = document.getElementById('btnRoute');
+  const flagsStack = document.querySelector('.flags-stack');
+  const routeView = document.getElementById('route-view');
+
+  function showLayout(){
+    if(flagsStack) { flagsStack.style.display = 'flex'; flagsStack.scrollIntoView({behavior:'smooth',block:'start'}); flagsStack.focus && flagsStack.focus(); }
+    if(routeView) { routeView.classList.add('hidden'); routeView.setAttribute('aria-hidden','true'); }
+    if(btnLayout){ btnLayout.classList.add('active'); btnLayout.setAttribute('aria-pressed','true'); }
+    if(btnRoute){ btnRoute.classList.remove('active'); btnRoute.setAttribute('aria-pressed','false'); }
+  }
+
+  function showRoute(){
+    if(flagsStack) flagsStack.style.display = 'none';
+    if(routeView) { routeView.classList.remove('hidden'); routeView.setAttribute('aria-hidden','false'); }
+    if(btnLayout){ btnLayout.classList.remove('active'); btnLayout.setAttribute('aria-pressed','false'); }
+    if(btnRoute){ btnRoute.classList.add('active'); btnRoute.setAttribute('aria-pressed','true'); }
+  }
+
+  if(btnLayout) btnLayout.addEventListener('click', showLayout);
+  if(btnRoute) btnRoute.addEventListener('click', showRoute);
+
+  // keyboard access
+  [btnLayout, btnRoute].forEach(b=>{ if(!b) return; b.tabIndex = 0; b.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') b.click(); }); });
+
+  // Numbering system for cards
+  function refreshCardNumbers(){
+    // Find all flag cards in document order and number them sequentially,
+    // but skip certain top flags (they should not be numbered)
+    const excludeSelector = '.flag-card.national, .flag-card.college, .flag-card.lasalian';
+    // Remove any previously injected variant clones to avoid duplicates (leftover from older approach)
+    const injectedSelector = '.flag-card._variant_clone';
+    Array.from(document.querySelectorAll(injectedSelector)).forEach(n => n.parentNode && n.parentNode.removeChild(n));
+
+    // We will walk the cards in DOM order and keep track of variant groups so
+    // cards sharing the same data-variant-group get the same numeric index.
+    const cards = Array.from(document.querySelectorAll('.flag-card'));
+    let counter = 0;
+    const assignedGroups = new Map(); // groupId -> numericIndex
+
+    cards.forEach((card) => {
+      const isExcluded = card.matches(excludeSelector);
+      let order = card.querySelector('.order');
+      if(isExcluded){
+        if(order && order.parentNode) order.parentNode.removeChild(order);
+        return;
+      }
+
+      const group = card.getAttribute('data-variant-group');
+      const letter = card.getAttribute('data-variant-letter');
+
+      if(group){
+        // If this group already has a numeric assigned, reuse it; otherwise allocate next number
+        let num = assignedGroups.get(group);
+        if(!num){
+          counter += 1;
+          num = counter;
+          assignedGroups.set(group, num);
+        }
+        // create order element if missing
+        if(!order){
+          order = document.createElement('div');
+          order.className = 'order';
+          card.insertBefore(order, card.firstChild);
+        }
+        // append letter if present, otherwise show numeric only
+        order.textContent = String(num) + (letter ? String(letter) : '');
+      } else {
+        // normal single card: increment counter and assign numeric
+        if(!order){
+          order = document.createElement('div');
+          order.className = 'order';
+          card.insertBefore(order, card.firstChild);
+        }
+        counter += 1;
+        order.textContent = String(counter);
+      }
+    });
+  }
+
+  // Debounced global observer: watch for added/removed .flag-card elements anywhere in the document
+  (function observeAll(){
+    let t = null;
+    const debounced = ()=>{ clearTimeout(t); t = setTimeout(refreshCardNumbers, 80); };
+    const mo = new MutationObserver((mutations)=>{
+      for(const m of mutations){
+        if(m.type === 'childList' && (m.addedNodes.length || m.removedNodes.length)) { debounced(); break; }
+      }
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+    // initial numbering
+    refreshCardNumbers();
+  })();
 })();

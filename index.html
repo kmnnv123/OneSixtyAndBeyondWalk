@@ -3,14 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#0f1720">
+  <meta name="theme-color" content="#f8fafc">
   <title>National Flag</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="dark" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem">
+<body style="min-height:100vh;padding:2rem">
   <!-- Splash screen: place `logo.png` next to this HTML file -->
   <div id="splash">
     <img src="./One%20Sixty%20Gradient%20Logo%20white.png" alt="St Benedict's College" id="splash-logo">
+  </div>
+  <!-- View controls shown after splash -->
+  <div id="view-controls" aria-hidden="true">
+    <button id="btnLayout" class="view-btn active" aria-pressed="true">Layout</button>
+    <button id="btnRoute" class="view-btn" aria-pressed="false">Route</button>
   </div>
     <div class="flags-stack" style="display:flex;flex-direction:column;gap:1.2rem;align-items:center">
     <div class="flag-card national">
@@ -30,16 +35,16 @@
       <div class="flag-text" role="region">Western Brass Band</div>
     </div>
 
-    <div class="flag-card group">
-      <div class="flag-text" role="region">Oriental Dancers and Drummers</div>
-    </div>
-
     <div class="flag-card group statue">
       <div class="flag-text" role="region">Vehicle with St Benedict's Statue</div>
     </div>
 
-    <div class="flag-card group">
+    <div class="flag-card group" data-variant-group="g3" data-variant-letter="A">
       <div class="flag-text" role="region">Reverends, VIPs and Dignitaries</div>
+    </div>
+
+    <div class="flag-card group" data-variant-group="g3" data-variant-letter="B">
+      <div class="flag-text" role="region">Past Teachers' Association</div>
     </div>
 
     <div class="flag-card group">
@@ -110,7 +115,19 @@
     </div>
 
     <div class="flag-card group">
+      <div class="flag-text" role="region">Oriental Dancers</div>
+    </div>
+
+    <div class="flag-card group">
       <div class="flag-text" role="region">School cadet Troop</div>
+    </div>
+
+    <div class="flag-card group">
+      <div class="flag-text" role="region">Scouts' Troop</div>
+    </div>
+
+    <div class="flag-card group">
+      <div class="flag-text" role="region">Jone Ambulance</div>
     </div>
 
     <div class="flag-card group">
@@ -218,7 +235,7 @@
     </div>
 
     <div class="flag-card group">
-      <div class="flag-text" role="region">Leagon of Mary
+      <div class="flag-text" role="region">Legion of Mary
         <span class="icons">
           <span class="moderator">Mr. Niluka Fernando</span>
         </span>
@@ -242,17 +259,9 @@
     </div>
 
     <div class="flag-card group">
-      <div class="flag-text" role="region">Stem Center
+      <div class="flag-text" role="region">STEM Center
         <span class="icons">
           <span class="moderator">Rev Bro Anton Piumal</span>
-        </span>
-      </div>
-    </div>
-
-    <div class="flag-card group">
-      <div class="flag-text" role="region">Math Club
-        <span class="icons">
-          <span class="moderator">Mr. Janaka Rodrigo</span>
         </span>
       </div>
     </div>
@@ -311,11 +320,6 @@
       <div class="flag-text" role="region">Gavel Club</div>
     </div>
 
-
-    <div class="flag-card group">
-      <div class="flag-text" role="region">Gavel Club</div>
-    </div>
-
     <div class="flag-card group">
       <div class="flag-text" role="region">Media Unit
         <span class="icons">
@@ -324,10 +328,18 @@
       </div>
     </div>
 
-     <div class="flag-card group statue">
-      <div class="flag-text" role="region">Sports Float
-      </div>
+    <div class="flag-card group">
+      <div class="flag-text" role="region">Eastern Orchestra</div>
     </div>
+
+    <div class="flag-card group">
+      <div class="flag-text" role="region">Interact Club</div>
+    </div>
+
+     <div class="flag-card group statue">
+      <div class="flag-text" role="region">Sports Float - Vehicle
+      </div>
+    </div>  
 
     <div class="flag-card group">
       <div class="flag-text" role="region">Athletic Team
@@ -338,14 +350,13 @@
           <span class="icon count senior" title="Senior Players">10</span>
           <span class="icon count junior" title="Junior Players">5</span>
         </span>
-        
       </div>
     </div>
-    
+
     <div class="flag-card group">
-      <div class="flag-text" role="region">Basketball Team
+      <div class="flag-text" role="region">Karate Team
         <span class="icons">
-          <span class="moderator">Mr. Gihan Perera</span>
+          <span class="moderator">Mr. Sagara Supethum</span>
         </span>
         <span class="icons" aria-hidden="true">
           <span class="icon count senior" title="Senior Players">10</span>
@@ -377,11 +388,23 @@
         </span>
       </div>
     </div>
-
+    
     <div class="flag-card group">
-      <div class="flag-text" role="region">Badminton Team
+      <div class="flag-text" role="region">Basketball Team
         <span class="icons">
-          <span class="moderator">Asanka Wanninayake</span>
+          <span class="moderator">Mr. Gihan Perera</span>
+        </span>
+        <span class="icons" aria-hidden="true">
+          <span class="icon count senior" title="Senior Players">10</span>
+          <span class="icon count junior" title="Junior Players">5</span>
+        </span>
+      </div>
+    </div>
+
+     <div class="flag-card group">
+      <div class="flag-text" role="region">Swimming Squad
+        <span class="icons">
+          <span class="moderator">Mr. Beverly Milroy</span>
         </span>
         <span class="icons" aria-hidden="true">
           <span class="icon count senior" title="Senior Players">10</span>
@@ -394,6 +417,31 @@
       <div class="flag-text" role="region">Hockey Team
         <span class="icons">
           <span class="moderator">Malraj Pigera</span>
+        </span>
+        <span class="icons" aria-hidden="true">
+          <span class="icon count senior" title="Senior Players">10</span>
+          <span class="icon count junior" title="Junior Players">5</span>
+        </span>
+      </div>
+    </div>
+
+     <div class="flag-card group">
+      <div class="flag-text" role="region">Riffle Shooters
+        <span class="icons">
+          <span class="moderator">Mr. Jude Vaz</span>
+        </span>
+        <span class="icons" aria-hidden="true">
+          <span class="icon count senior" title="Senior Players">10</span>
+          <span class="icon count junior" title="Junior Players">5</span>
+        </span>
+      </div>
+    </div>
+    </div>
+
+    <div class="flag-card group">
+      <div class="flag-text" role="region">Gymnastics
+        <span class="icons">
+          <span class="moderator">Mr. Nihal Laknath</span>
         </span>
         <span class="icons" aria-hidden="true">
           <span class="icon count senior" title="Senior Players">10</span>
@@ -415,33 +463,21 @@
     </div>
 
     <div class="flag-card group">
-      <div class="flag-text" role="region">Swimming Squad
-        <span class="icons">
-          <span class="moderator">Mr. Beverly Milroy</span>
-        </span>
-        <span class="icons" aria-hidden="true">
-          <span class="icon count senior" title="Senior Players">10</span>
-          <span class="icon count junior" title="Junior Players">5</span>
-        </span>
-      </div>
-    </div>
-
-    <div class="flag-card group">
-      <div class="flag-text" role="region">Karate Team
-        <span class="icons">
-          <span class="moderator">Mr. Sagara Supethum</span>
-        </span>
-        <span class="icons" aria-hidden="true">
-          <span class="icon count senior" title="Senior Players">10</span>
-          <span class="icon count junior" title="Junior Players">5</span>
-        </span>
-      </div>
-    </div>
-
-    <div class="flag-card group">
       <div class="flag-text" role="region">Tennis Team
         <span class="icons">
           <span class="moderator">Mrs. Shamala Murugaiah</span>
+        </span>
+        <span class="icons" aria-hidden="true">
+          <span class="icon count senior" title="Senior Players">10</span>
+          <span class="icon count junior" title="Junior Players">5</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="flag-card group">
+      <div class="flag-text" role="region">Badminton Team
+        <span class="icons">
+          <span class="moderator">Asanka Wanninayake</span>
         </span>
         <span class="icons" aria-hidden="true">
           <span class="icon count senior" title="Senior Players">10</span>
@@ -463,9 +499,9 @@
     </div>
 
     <div class="flag-card group">
-      <div class="flag-text" role="region">Gymnastics
+      <div class="flag-text" role="region">Badminton Team
         <span class="icons">
-          <span class="moderator">Mr. Nihal Laknath</span>
+          <span class="moderator">Asanka Wanninayake</span>
         </span>
         <span class="icons" aria-hidden="true">
           <span class="icon count senior" title="Senior Players">10</span>
@@ -474,16 +510,29 @@
       </div>
     </div>
     
-    <div class="flag-card group">
-      <div class="flag-text" role="region">Riffle Shooters
-        <span class="icons">
-          <span class="moderator">Mr. Jude Vaz</span>
-        </span>
-        <span class="icons" aria-hidden="true">
-          <span class="icon count senior" title="Senior Players">10</span>
-          <span class="icon count junior" title="Junior Players">5</span>
-        </span>
+   
+
+  <!-- Route view (hidden by default) -->
+  <div id="route-view" class="route-view hidden" aria-hidden="true">
+    <div class="route-card card">
+      <h2 class="muted">Route View</h2>
+      <p class="small-note">This shows the march route — tap "Layout" to return to the march order.</p>
+      <div class="route-map">
+        <iframe loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=79.8490%2C6.9200%2C79.8740%2C6.9360&amp;layer=mapnik&amp;marker=6.9280%2C79.8615" style="border:0"></iframe>
       </div>
+      <ol class="route-list">
+        <li>National Flag</li>
+        <li>College Flag</li>
+        <li>Lasalian Flag</li>
+        <li>Western Brass Band</li>
+        <li>Oriental Dancers and Drummers</li>
+        <li>Vehicle with St Benedict's Statue</li>
+        <li>Reverends, VIPs and Dignitaries</li>
+        <li>Invited School Prefects</li>
+        <li>Upper School Prefects</li>
+        <li>Primary Eastern Band</li>
+        <li>Grade 1 — Grade 11 (and units)</li>
+      </ol>
     </div>
   </div>
   <script src="script.js"></script>
